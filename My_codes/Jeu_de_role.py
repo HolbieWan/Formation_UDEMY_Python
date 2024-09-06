@@ -2,7 +2,7 @@
 
 import random
 
-print("\n***Jeux de role***\n")
+print("\n***Jeux de rôle***\n")
 print("-------------------\n")
 
 nombre_vies_utilisateur = 50
@@ -15,7 +15,7 @@ print(f"Nombre potions utilisateur: {nb_potions}\n")
 
 while(nombre_vies_utilisateur > 0):
 
-    choix_attaque_ou_potion = input("Souhaitez-vous attaquer(1) ou prendre une potion(2) ? ")
+    choix_attaque_ou_potion = input("\nSouhaitez-vous attaquer(1) ou prendre une potion(2) ? ")
 
     if choix_attaque_ou_potion != "1" and choix_attaque_ou_potion != "2":
         print("Veuillez entrez 1 ou 2")
@@ -38,6 +38,7 @@ while(nombre_vies_utilisateur > 0):
         print(f"Nombre vies adversaire: {nombre_vies_adversaire}\n")
         if nombre_vies_adversaire <= 0:
             print("Bravo, vous avez gagné!\n")
+            print("-" * 50)
             rejouer = input("Souhaitez vous faire une autre partie? Yes, No? \n")
             while(rejouer not in list(list_rejouer)):
                 print("Veuiller taper yes or no")
@@ -51,8 +52,9 @@ while(nombre_vies_utilisateur > 0):
             else:
                 print("\nA plus beau goss!\n")
                 break
+        print("-" * 50)
 
-        print("Votre adversaire joue: \n")
+        print("Votre adversaire joue: ")
         nombre_vies_utilisateur -= degats_sur_utilisateur
         print(f"Vous avez perdu: {degats_sur_utilisateur} vies")
         print(f"Nombre vies utilisateur: {nombre_vies_utilisateur}")
@@ -72,7 +74,7 @@ while(nombre_vies_utilisateur > 0):
             else:
                 print("\nA plus beau goss!\n")
                 break
-
+        print("-" * 50)
         continue
 
     if choix_attaque_ou_potion== "2":
@@ -113,6 +115,7 @@ while(nombre_vies_utilisateur > 0):
             else:
                 print("\nA plus beau goss!\n")
                 break
+        print("-" * 50)
 
         print("Votre adversaire re-joue: ")
         degats_sur_utilisateur = random.randrange(5, 15)
@@ -135,7 +138,7 @@ while(nombre_vies_utilisateur > 0):
             else:
                 print("\nA plus beau goss!\n")
                 break
-    
+        print("-" * 50)
         continue
 
 
