@@ -3,7 +3,8 @@
 import sys
 import os
 import json
-from Liste_Courses_Classes_Lignes_Commandes import Liste
+#from Liste_Courses_Classes_Lignes_Commandes import Liste
+from Liste_Courses_Classes_Lignes_Commandes_2 import Liste
 
 nom_liste = input("\nQuelle est le nom de la liste que vous souhaitez utiliser? ")
 ma_liste = Liste(nom_liste=f"{nom_liste}")
