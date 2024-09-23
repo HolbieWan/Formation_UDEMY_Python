@@ -1,0 +1,27 @@
+{
+    "Users": {
+        "1": {
+            "name": "Patrick",
+            "salaire": 35000
+        },
+        "2": {
+            "name": "Justine",
+            "salaire": 25000
+        },
+        "3": {
+            "name": "Marcel",
+            "salaire": 65000
+        }
+    },
+    "Roles": {
+        "1": {
+            "role": "Dancer"
+        },
+        "2": {
+            "role": "Fascionista"
+        },
+        "3": {
+            "role": "Singer"
+        }
+    }
+}

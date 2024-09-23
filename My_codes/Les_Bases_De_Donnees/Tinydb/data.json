@@ -1,0 +1,18 @@
+{
+    "_default": {
+        "1": {
+            "name": "Patrick",
+            "score": 10,
+            "roles": [
+                "Dancer"
+            ]
+        },
+        "3": {
+            "name": "Julie",
+            "score": 120,
+            "roles": [
+                "Junior"
+            ]
+        }
+    }
+}
