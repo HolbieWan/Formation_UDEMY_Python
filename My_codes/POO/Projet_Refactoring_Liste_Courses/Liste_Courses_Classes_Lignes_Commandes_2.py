@@ -32,21 +32,32 @@ class Liste():
       print(f"{i}. {element}")
     
   def ajouter(self, element: str = "nouvel_element"):
+     if element in self.liste:
+        print(f"{element} est déjà présent dans la liste")
+        return False
      self.liste.append(element)
      self.enregistrer()
      print(f"L'élément: {element} à bien été ajouté à \"{self.nom_liste}\"")
+     return True
      
   def retirer(self, element: str = "element_suprime"):
-     self.liste.remove(element)
-     self.enregistrer()
-     print(f"L'élément: {element} a bien été retiré de \"{self.nom_liste}\"")
+     if not element in self.liste:
+        print(f"{element} n'est pas présent dans la liste")
+        return False
+     else:
+        self.liste.remove(element)
+        self.enregistrer()
+        print(f"L'élément: {element} a bien été retiré de \"{self.nom_liste}\"")
+        return True
 
   def effacer(self):
      self.liste.clear()
      self.enregistrer()
      print(f"La liste \"{self.nom_liste}\" a bien été effacée")
+     return True
 
   def enregistrer(self):
     with open(self.chemin, "w") as liste:
       json.dump(self.liste, liste, indent=4)
+    return True
   
