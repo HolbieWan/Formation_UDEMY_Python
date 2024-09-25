@@ -2,9 +2,21 @@
 
 from tinydb import TinyDB, Query
 from pathlib import Path
+import string
+from collections import Counter
+from pprint import pprint
 from bs4 import BeautifulSoup
 import requests
 import re
+
+# Some url's for different artists api-links:
+# Bob Marley: https://genius.com/api/artists/28615/songs?page={current_page}&sort=popularity
+# Adèle: https://genius.com/api/artists/2300/songs?page={current_page}&sort=popularity
+# Jean-Jacques Goldman: https://genius.com/api/artists/47263/songs?page={current_page}&sort=popularity
+# 50 Cents: https://genius.com/api/artists/108/songs?page={current_page}&sort=popularity
+# Eminem: https://genius.com/api/artists/45/songs?page={current_page}&sort=popularity
+# Micheal Jakson: https://genius.com/api/artists/835/songs?page={current_page}&sort=popularity
+
 
 DB = TinyDB(Path(__file__).resolve().parent / 'db.json', indent=4)
 
@@ -15,7 +27,7 @@ def get_all_urls():
 
   while next_page:
   #while current_page < 2:
-    r = requests.get(f"https://genius.com/api/artists/28615/songs?page={current_page}&sort=popularity")
+    r = requests.get(f"https://genius.com/api/artists/2300/songs?page={current_page}&sort=popularity")
 
     if r.status_code != 200:
       print("Probleme d'url")
@@ -72,6 +84,7 @@ def get_all_lyrics_list():
 
     return title_list, all_lyrics_list
 
+
 def print_clean_lyrics_list(title_list, all_lyrics_list):
   if title_list and all_lyrics_list:
     for i in range(len(title_list)):
@@ -86,11 +99,13 @@ def get_all_lyrics_to_dict():
     all_songs_dict = {}
     for url in url_list:
         title, lyrics = extract_lyrics_and_title(url)
+        print("Fetching Lyrics\n")
         if title and lyrics:
            all_songs_dict[title] = lyrics
-
+    
     save_in_db(all_songs_dict)
     return all_songs_dict
+
 
 def print_clean_lyrics_dict(all_songs_dict):
    for title, lyrics in all_songs_dict.items():
@@ -98,9 +113,11 @@ def print_clean_lyrics_dict(all_songs_dict):
       print(f"Lyrics:\n\n {lyrics}")
       print("\n" + "="*40 + "\n")
 
+
 def save_in_db(objet):
   if object:
     DB.insert(objet)
+
 
 def fetch_song_by_title(song_title):
     Song = Query()
@@ -111,20 +128,41 @@ def fetch_song_by_title(song_title):
         print(f"Song '{song_title}' not found in the database.")
         return None
 
-# Print all songs stored in the DB
+
 def print_all_songs_from_db():
-    all_songs_from_db = DB.all()  # Fetch all records from the database
+    all_songs_from_db = DB.all()
     if all_songs_from_db:
         for song in all_songs_from_db:
             print_clean_lyrics_dict(song)
     else:
         print("No songs found in the database.")
 
+
 def print_song_from_db(song_title):
   song_lyrics = fetch_song_by_title(song_title)
   if song_lyrics:
       print(f"\nTitle: {song_title}\n")
       print(f"Lyrics:\n\n {song_lyrics}\n")
+
+
+def most_frequent_words(min_word_length: int = 1, number_of_words: int = 10):
+    words = []
+    all_db_lyrics = DB.all()
+    translator = str.maketrans('', '', string.punctuation)
+
+    for song in all_db_lyrics:
+      for title, lyrics in song.items():
+        cleaned_lyrics = lyrics.translate(translator).lower()
+        word_list = cleaned_lyrics.split()
+        filtered_words = [word for word in word_list if len(word) >= min_word_length]
+        words.extend(filtered_words)
+            
+    word_count = Counter(words)
+    most_common_words = word_count.most_common(number_of_words)
+    pprint(most_common_words)
+
+    return most_common_words
+
    
 
 
@@ -138,5 +176,7 @@ if __name__=="__main__":
 
   # print_song_from_db("Redemption Song")
 
-  print_all_songs_from_db()
-
+  #print_all_songs_from_db()
+  for i in range (10):
+    most_frequent_words(i, 10)
+    print()
