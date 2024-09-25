@@ -21,7 +21,7 @@ artistes_urls = {
     "Micheal Jakson" : "https://genius.com/api/artists/835/songs?page={current_page}&sort=popularity"
 }
 
-artiste = "50 Cents"
+artiste = "Micheal Jakson"
 
 DB = TinyDB(Path(__file__).resolve().parent / 'db.json', indent=4)
 
@@ -157,7 +157,7 @@ def most_frequent_words_by_artist(artist_name, min_word_length: int = 1, number_
     for title, lyrics in artist_songs.items():
         cleaned_lyrics = lyrics.translate(translator).lower()
         word_list = cleaned_lyrics.split()
-        filtered_words = [word for word in word_list if len(word) == min_word_length]
+        filtered_words = [word for word in word_list if len(word) >= min_word_length]
         words.extend(filtered_words)
             
     word_count = Counter(words)
@@ -180,6 +180,11 @@ if __name__=="__main__":
   get_all_lyrics_to_dict(artiste)
   print_songs_by_artist(artiste)
 
-  for i in range (5, 12):
-    most_frequent_words_by_artist(artiste, i, 20)
+#   most_frequent_words_by_artist(artiste, 4, 15)
+
+  for i in range (1, 12):
+    most_frequent_words_by_artist(artiste, i, 15)
     print()
+
+
+
