@@ -13,9 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from tkinter.font import names
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.views.defaults import server_error
+
+from .views import index
+# from app1_blog.views import blog_index
 
 urlpatterns = [
+    path('', index, name="index"),
     path('admin/', admin.site.urls),
+    path('blog/', include("app1_blog.urls"))
+    # path('blog/', blog_index, name="blog_index")
 ]
